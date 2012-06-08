@@ -1,0 +1,1 @@
+lessc _dev/css/bugs.less public/assets/css/bugs.css --compress

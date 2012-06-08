@@ -1,0 +1,21 @@
+<div class="content">
+	<h2>Bugs</h2>
+	<table class="table table-striped">
+		<thead>
+			<th>ID</th>
+			<th>Summary</th>
+			<th>Status</th>
+			<th>Reported by</th>
+		</thead>
+		<tbody>
+		<% bugs.forEach(function(bug){ %>
+			<tr>
+				<td><%= bug.id %></td>
+				<td><a href="<%= bug.href() %>"><%= bug.summary %></a></td>
+				<td><%= bug.status %></td>
+				<td><%= bug.userName %></td>
+			</tr>
+		<% }); %>
+		</tbody>
+	</table>
+</div>

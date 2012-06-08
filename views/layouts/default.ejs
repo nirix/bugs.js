@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title><%= title %> - {title here}</title>
+		<link rel="stylesheet" href="/assets/css/bugs.css">
+	</head>
+	<body>
+		<div id="wrapper">
+			<header id="header">
+				<h1>{title here}</h1>
+			</header>
+			<nav id="navbar" class="navbar navbar-inner">
+				<ul>
+					<li><a href="/">Bugs</a></li>
+					<li><a href="/bugs/new">Report Bug</a></li>
+				</ul>
+			</nav>
+			<div id="page">
+<%- body %>
+			</div>
+			<footer id="footer">
+				Powered by Bugs.js &copy; Nirix
+			</footer>
+	</body>
+</html>
