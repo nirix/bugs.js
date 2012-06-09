@@ -22,7 +22,7 @@ var app = module.exports = express.createServer();
 // Configuration
 app.configure(function(){
   app.use(express.cookieParser());
-  app.use(express.session({ secret: config.secret, reapInterval: 60000 * 10 }));
+  app.use(express.session({ secret: config.secret, key: '_sess', cookie: { httpOnly: true, maxAge: 10 * 100000000 } }));
   app.set('views', __dirname + '/views');
   app.set('view engine', 'ejs');
   app.set('view options', { layout: 'layouts/default', app: { title: config.title, ver: bugsjs.version } });
@@ -53,6 +53,8 @@ app.dynamicHelpers({
 
 // Middlewares
 function getCurrentUser(req, res, next) {
+  next();
+  /*
   if (req.session.user) {
     next();
   } else {
@@ -60,7 +62,7 @@ function getCurrentUser(req, res, next) {
       req.session.user = user;
       next();
     });
-  }
+  }*/
 }
 
 function requiresLogin(req, res, next) {
@@ -80,16 +82,16 @@ function adminOnly(req, res, next) {
 }
 
 // Routes
-app.get('/', getCurrentUser, routes.bugs.index);
-app.get('/bugs/new', [getCurrentUser, requiresLogin], routes.bugs.new);
-app.post('/bugs/new', [getCurrentUser, requiresLogin], routes.bugs.create);
-app.get('/bugs/:id', getCurrentUser, routes.bugs.view);
-app.post('/bugs/:id/update', [getCurrentUser, requiresLogin, adminOnly], routes.bugs.update_status);
-app.get('/login', getCurrentUser, routes.users.login);
-app.post('/login', getCurrentUser, routes.users.do_login);
+app.get('/', routes.bugs.index);
+app.get('/bugs/new', [requiresLogin], routes.bugs.new);
+app.post('/bugs/new', [requiresLogin], routes.bugs.create);
+app.get('/bugs/:id', routes.bugs.view);
+app.post('/bugs/:id/update', [requiresLogin, adminOnly], routes.bugs.update_status);
+app.get('/login', routes.users.login);
+app.post('/login', routes.users.do_login);
 app.get('/logout', routes.users.logout);
-app.get('/register', getCurrentUser, routes.users.register);
-app.post('/register', getCurrentUser, routes.users.create);
+app.get('/register', routes.users.register);
+app.post('/register', routes.users.create);
 
 app.listen(3000, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);

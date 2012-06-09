@@ -23,7 +23,7 @@ exports.do_login = function(req, res) {
   .success(function(user){
     // Validate the users password
     if (user && user.id > 0 && bcrypt.compareSync(req.body.password, user.password)) {
-      res.cookie('_bugs', user.login_hash, { expires: new Date(Date.now() + Date.now()), httpOnly: true });
+      //res.cookie('_bugs', user.login_hash, { expires: 10 * 100000000, httpOnly: true });
       req.session.user = user;
       res.redirect('/');
     }

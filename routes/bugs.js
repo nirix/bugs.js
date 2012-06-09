@@ -38,7 +38,7 @@ exports.view = function(req, res) {
 // New bug form
 exports.new = function(req, res)
 {
-	res.render('bugs/new', { title: 'Report Bug' });
+	res.render('bugs/new', { title: 'Report Bug', error: false });
 }
 
 // Create the bug
