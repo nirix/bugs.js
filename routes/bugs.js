@@ -7,12 +7,14 @@
  * @license BSD 3-clause
  */
 
+// Bug listing
 exports.index = function(req, res) {
   models.Bug.findAll().success(function(bugs){
   	res.render('bugs/index', { title: 'Bugs', bugs: bugs })
   });
 };
 
+// View bug
 exports.view = function(req, res) {
 	models.Bug.find({ where: { id: req.param('id') }}).success(function(bug){
 		res.render('bugs/view', { title: bug.summary + " - Bugs", bug: bug });
@@ -22,7 +24,13 @@ exports.view = function(req, res) {
 	});
 }
 
-exports.new = function(res, res)
+// New bug form
+exports.new = function(req, res)
 {
-	res.send('new');
+	res.render('bugs/new', { title: 'Report Bug' });
+}
+
+// Create the bug
+exports.create = function(req, res) {
+	res.send(req.body.bug);
 }

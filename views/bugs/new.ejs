@@ -1,0 +1,22 @@
+<div class="new bug content">
+	<h2>Report Bug</h2>
+	<form action="/bugs/new" method="post" class="well form-horizontal">
+		<div class="control-group">
+			<label class="control-label" for="summary">Summary</label>
+			<div class="controls">
+				<input type="text" name="bug[summary]" id="summary" required>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="description">Description</label>
+			<div class="controls">
+				<textarea name="bug[description]" id="description" required></textarea>
+			</div>
+		</div>
+		<div class="control-group last">
+			<div class="controls">
+				<input type="submit" value="Report">
+			</div>
+		</div>
+	</form>
+</div>
