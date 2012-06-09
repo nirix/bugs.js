@@ -64,3 +64,23 @@ exports.create = function(req, res) {
 		});
 	}
 }
+
+// Update bug status
+exports.update_status = function(req, res) {
+	models.Bug.find({ where: { id: req.param('id') }}).success(function(bug){
+		bug.status = req.body.bug.status;
+
+		if (bug.status in {'Fixed':'', 'Wont Fix':'', 'Invalid':''}) {
+			bug.closed = true;
+		} else {
+			bug.closed = false;
+		}
+		
+		bug.save().success(function(){
+			res.redirect(bug.href());
+		});
+	})
+	.error(function(){
+		res.send('');
+	});
+}

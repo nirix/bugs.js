@@ -19,7 +19,19 @@
 		</tbody>
 	</table>
 	<h3>Description</h3>
-	<div class="description">
+	<div class="description well">
 		<%= bug.description %>
 	</div>
+<% if (session.user && session.user.isAdmin) { %>
+	<h3>Update Bug</h3>
+	<form action="<%= requestedUrl %>/update" method="post" class="form-inline well">
+		<label>Status</label>
+		<select name="bug[status]" class="span2">
+		<% ['New', 'Accepted', 'Fixed', 'Wont fix', 'Invalid'].forEach(function(op){ %>
+			<option value="<%= op %>"<% if (op == bug.status) { %>selected<% } %>><%= op %></option>
+		<% }); %>
+		</select>
+		<input type="submit" value="update" class="btn">
+	</form>
+<% } %>
 </div>

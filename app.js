@@ -44,7 +44,10 @@ app.configure('production', function(){
 // Helpers
 app.dynamicHelpers({
   session: function(req, res){
-    return req.session
+    return req.session;
+  },
+  requestedUrl: function(req, res){
+    return req.url;
   }
 });
 
@@ -68,11 +71,20 @@ function requiresLogin(req, res, next) {
   }
 }
 
+function adminOnly(req, res, next) {
+  if (req.session.user.isAdmin) {
+    next();
+  } else {
+    res.redirect('/login');
+  }
+}
+
 // Routes
 app.get('/', getCurrentUser, routes.bugs.index);
 app.get('/bugs/new', [getCurrentUser, requiresLogin], routes.bugs.new);
 app.post('/bugs/new', [getCurrentUser, requiresLogin], routes.bugs.create);
 app.get('/bugs/:id', getCurrentUser, routes.bugs.view);
+app.post('/bugs/:id/update', [getCurrentUser, requiresLogin, adminOnly], routes.bugs.update_status);
 app.get('/login', getCurrentUser, routes.users.login);
 app.post('/login', getCurrentUser, routes.users.do_login);
 app.get('/logout', routes.users.logout);
