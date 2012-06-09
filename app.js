@@ -9,7 +9,8 @@
 
 var express = require('express')
   , routes = require('./routes')
-  , db = require('./db.js');
+  , db = require('./db.js')
+  , config = require('./config.js');
 
 global.db = db;
 global.models = require('./models');
@@ -20,10 +21,10 @@ var app = module.exports = express.createServer();
 // Configuration
 app.configure(function(){
   app.use(express.cookieParser());
-  app.use(express.session({ secret: "Ruby > PHP > .NET", reapInterval: 60000 * 10 }));
+  app.use(express.session({ secret: config.secret, reapInterval: 60000 * 10 }));
   app.set('views', __dirname + '/views');
   app.set('view engine', 'ejs');
-  app.set('view options', { layout: 'layouts/default' });
+  app.set('view options', { layout: 'layouts/default', app: { title: config.title } });
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(app.router);
@@ -41,7 +42,7 @@ app.configure('production', function(){
 
 // Helpers
 app.dynamicHelpers({
-  session: function(req,res){
+  session: function(req, res){
     return req.session
   }
 });
@@ -50,8 +51,7 @@ app.dynamicHelpers({
 function getCurrentUser(req, res, next) {
   if (req.session.user) {
     next();
-  }
-  else {
+  } else {
     models.User.find({ where: { login_hash: req.cookies._bugs }}).success(function(user){
       req.session.user = user;
       next();
@@ -59,9 +59,18 @@ function getCurrentUser(req, res, next) {
   }
 }
 
+function requiresLogin(req, res, next) {
+  if (req.session.user) {
+    next();
+  } else {
+    res.redirect('/login?goto=' + req.url);
+  }
+}
+
 // Routes
 app.get('/', getCurrentUser, routes.bugs.index);
-app.get('/bugs/new', getCurrentUser, routes.bugs.new);
+app.get('/bugs/new', [getCurrentUser, requiresLogin], routes.bugs.new);
+app.post('/bugs/new', [getCurrentUser, requiresLogin], routes.bugs.create);
 app.get('/bugs/:id', getCurrentUser, routes.bugs.view);
 app.get('/login', getCurrentUser, routes.users.login);
 app.post('/login', getCurrentUser, routes.users.do_login);
