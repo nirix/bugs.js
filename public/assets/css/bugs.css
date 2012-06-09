@@ -731,3 +731,4 @@ button.close{padding:0;cursor:pointer;background:transparent;border:0;-webkit-ap
 .content{padding:10px 0;}
 #footer{font-size:12px;color:#c0c0c0;}
 .bug.content .description{margin-bottom:10px;}
+form.form-horizontal .control-group.last{margin-bottom:0;}

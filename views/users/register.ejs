@@ -1,7 +1,7 @@
 <div class="content">
 	<h2>Register</h2>
 	<% if (error) { %>
-	<div class="error">
+	<div class="alert alert-error">
 		<ul>
 		<% for (var e in error) { %>
 			<li><%= error[e] %></li>
@@ -9,21 +9,29 @@
 		</ul>
 	</div>
 	<% } %>
-	<form action="/register" method="post" class="tabular box">
-		<div class="group">
-			<label for="username">Username</label>
-			<input type="text" name="username" id="username" required>
+	<form action="/register" method="post" class="well form-horizontal">
+		<div class="control-group">
+			<label class="control-label" for="username">Username</label>
+			<div class="controls">
+				<input type="text" name="username" id="username" required>
+			</div>
 		</div>
-		<div class="group">
-			<label for="password">Password</label>
-			<input type="password" name="password" id="password">
+		<div class="control-group">
+			<label class="control-label" for="password">Password</label>
+			<div class="controls">
+				<input type="password" name="password" id="password" required>
+			</div>
 		</div>
-		<div class="group">
-			<label for="email">Email</label>
-			<input type="email" name="email" id="email" required>
+		<div class="control-group">
+			<label class="control-label" for="email">Email</label>
+			<div class="controls">
+				<input type="email" name="email" id="email" required>
+			</div>
 		</div>
-		<div class="group">
-			<input type="submit" value="Register">
+		<div class="control-group last">
+			<div class="controls">
+				<input type="submit" value="Register">
+			</div>
 		</div>
 	</form>
 </div>
