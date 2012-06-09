@@ -10,6 +10,14 @@
 				<h1>{title here}</h1>
 			</header>
 			<nav id="navbar" class="navbar navbar-inner">
+				<ul id="usernav">
+				<% if (session.user) { %>
+					<li><a href="/logout">Logout</a></li>
+				<% } else { %>
+					<li><a href="/login">Login</a></li>
+					<li><a href="/register">Register</a></li>
+				<% } %>
+				</ul>
 				<ul>
 					<li><a href="/">Bugs</a></li>
 					<li><a href="/bugs/new">Report Bug</a></li>

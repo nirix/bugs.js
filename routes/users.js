@@ -23,6 +23,7 @@ exports.do_login = function(req, res) {
     // Validate the users password
     if (user.id > 0 && bcrypt.compareSync(req.body.password, user.password)) {
       res.cookie('_bugs', user.login_hash, { expires: new Date(Date.now() + Date.now()), httpOnly: true });
+      req.session.user = user;
       res.redirect('/');
     }
     // Either the user doesnt exist or the password is wrong
@@ -31,6 +32,13 @@ exports.do_login = function(req, res) {
     }
   });
 };
+
+// Logout
+exports.logout = function(req, res) {
+  delete req.session.user;
+  res.cookie('_bugs', '', { expires: new Date() });
+  res.redirect('/');
+}
 
 // Register
 exports.register = function(req, res) {
@@ -48,7 +56,7 @@ exports.create = function(req, res) {
     username: req.body.username,
     password: req.body.password,
     email: req.body.email,
-    group_id: 3,
+    isAdmin: false,
     login_hash: new hashes.SHA1().hex("<('.'<)" + Date.now() + "<('.')>" + Math.random() + "(>'.')>")
   });
   

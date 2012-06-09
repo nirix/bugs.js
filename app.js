@@ -19,6 +19,8 @@ var app = module.exports = express.createServer();
 
 // Configuration
 app.configure(function(){
+  app.use(express.cookieParser());
+  app.use(express.session({ secret: "Ruby > PHP > .NET", reapInterval: 60000 * 10 }));
   app.set('views', __dirname + '/views');
   app.set('view engine', 'ejs');
   app.set('view options', { layout: 'layouts/default' });
@@ -37,14 +39,35 @@ app.configure('production', function(){
   app.use(express.errorHandler());
 });
 
+// Helpers
+app.dynamicHelpers({
+  session: function(req,res){
+    return req.session
+  }
+});
+
+// Middlewares
+function getCurrentUser(req, res, next) {
+  if (req.session.user) {
+    next();
+  }
+  else {
+    models.User.find({ where: { login_hash: req.cookies._bugs }}).success(function(user){
+      req.session.user = user;
+      next();
+    });
+  }
+}
+
 // Routes
-app.get('/', routes.bugs.index);
-app.get('/bugs/new', routes.bugs.new);
-app.get('/bugs/:id', routes.bugs.view);
-app.get('/login', routes.users.login);
-app.post('/login', routes.users.do_login);
-app.get('/register', routes.users.register);
-app.post('/register', routes.users.create);
+app.get('/', getCurrentUser, routes.bugs.index);
+app.get('/bugs/new', getCurrentUser, routes.bugs.new);
+app.get('/bugs/:id', getCurrentUser, routes.bugs.view);
+app.get('/login', getCurrentUser, routes.users.login);
+app.post('/login', getCurrentUser, routes.users.do_login);
+app.get('/logout', routes.users.logout);
+app.get('/register', getCurrentUser, routes.users.register);
+app.post('/register', getCurrentUser, routes.users.create);
 
 app.listen(3000, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);

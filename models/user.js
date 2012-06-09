@@ -23,9 +23,9 @@ module.exports = function(sequelize, dtype) {
       type:dtype.STRING,
       validate: { isEmail: { args: true, msg: "Invalid email" } }
     },
-    group_id: {
-      type: dtype.INTEGER,
-      validate: { isNumeric: true }
+    isAdmin: {
+      type: dtype.BOOLEAN,
+      validate: { notNull: true }
     },
     login_hash: {
       type: dtype.STRING,
