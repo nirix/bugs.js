@@ -4,9 +4,9 @@
   , "private": true
   , "dependencies": {
       "express": "2.5.8"
-    , "ejs": ">= 0.0.1"
-    , "bcrypt": ">= 0.5.0"
-    , "jshashes": ">= 0.1.4"
-    , "sequelize": ">= 1.4.1"
+    , "ejs": "0.7.1"
+    , "bcrypt": "0.5.0"
+    , "jshashes": "0.1.4b"
+    , "sequelize": "1.4.1"
   }
 }
