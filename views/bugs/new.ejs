@@ -1,5 +1,14 @@
 <div class="new bug content">
 	<h2>Report Bug</h2>
+	<% if (error) { %>
+	<div class="alert alert-error">
+		<ul>
+		<% for (var e in error) { %>
+			<li><%= error[e] %></li>
+		<% } %>
+		</ul>
+	</div>
+	<% } %>
 	<form action="/bugs/new" method="post" class="well form-horizontal">
 		<div class="control-group">
 			<label class="control-label" for="summary">Summary</label>
