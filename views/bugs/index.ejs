@@ -13,7 +13,7 @@
 				<td><%= bug.id %></td>
 				<td><a href="<%= bug.href() %>"><%= bug.summary %></a></td>
 				<td><%= bug.status %></td>
-				<td><%= bug.userName %></td>
+				<td><%= bug.user.username %></td>
 			</tr>
 		<% }); %>
 		</tbody>

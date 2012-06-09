@@ -27,10 +27,6 @@ module.exports = function(sequelize, dtype) {
     closed: {
       type: dtype.BOOLEAN,
       validate: { notNull: true }
-    },
-    userName: {
-      type: dtype.STRING,
-      validate: { notEmpty: true }
     }
   },
   {
