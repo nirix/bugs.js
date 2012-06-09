@@ -52,19 +52,6 @@ app.dynamicHelpers({
 });
 
 // Middlewares
-function getCurrentUser(req, res, next) {
-  next();
-  /*
-  if (req.session.user) {
-    next();
-  } else {
-    models.User.find({ where: { login_hash: req.cookies._bugs }}).success(function(user){
-      req.session.user = user;
-      next();
-    });
-  }*/
-}
-
 function requiresLogin(req, res, next) {
   if (req.session.user) {
     next();
