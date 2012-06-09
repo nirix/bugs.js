@@ -10,7 +10,8 @@
 var express = require('express')
   , routes = require('./routes')
   , db = require('./db.js')
-  , config = require('./config.js');
+  , config = require('./config.js')
+  , bugsjs = require('./package.json');
 
 global.db = db;
 global.models = require('./models');
@@ -24,7 +25,7 @@ app.configure(function(){
   app.use(express.session({ secret: config.secret, reapInterval: 60000 * 10 }));
   app.set('views', __dirname + '/views');
   app.set('view engine', 'ejs');
-  app.set('view options', { layout: 'layouts/default', app: { title: config.title } });
+  app.set('view options', { layout: 'layouts/default', app: { title: config.title, ver: bugsjs.version } });
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(app.router);
