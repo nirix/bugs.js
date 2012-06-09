@@ -17,19 +17,23 @@ exports.login = function(req, res) {
 
 // Login handler
 exports.do_login = function(req, res) {
+  var no_joy = function() { res.render('users/login', { title: 'Login', error: true }) }
   // Find the user
   models.User.find({ where: { username: req.body.username } })
   .success(function(user){
     // Validate the users password
-    if (user.id > 0 && bcrypt.compareSync(req.body.password, user.password)) {
+    if (user && user.id > 0 && bcrypt.compareSync(req.body.password, user.password)) {
       res.cookie('_bugs', user.login_hash, { expires: new Date(Date.now() + Date.now()), httpOnly: true });
       req.session.user = user;
       res.redirect('/');
     }
     // Either the user doesnt exist or the password is wrong
     else {
-      res.render('users/login', { title: 'Login', error: true })
+      no_joy();
     }
+  })
+  .error(function(req, res){
+    no_joy();
   });
 };
 
