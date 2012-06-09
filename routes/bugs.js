@@ -11,11 +11,19 @@
 exports.index = function(req, res) {
   models.Bug.findAll().success(function(bugs){
   	var total = bugs.length;
+  	var engadge = function() {
+  		res.render('bugs/index', { title: 'Bugs', bugs: bugs });
+  	}
+
+  	if (total == 0) {
+  		engadge();
+  	}
+
   	bugs.forEach(function(bug){
   		bug.getUser().success(function(user){
   			bug.user = user;
   			if (--total === 0) {
-		 		res.render('bugs/index', { title: 'Bugs', bugs: bugs });
+		 		engadge();
   			}
   		});
   	});
