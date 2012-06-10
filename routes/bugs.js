@@ -84,9 +84,13 @@ exports.update_status = function(req, res) {
 			bug.closed = false;
 		}
 		
-		bug.save().success(function(){
+		if (bug.status in {'New':'', 'Accepted':'', 'Fixed':'', 'Wont fix':'', 'Invalid':''}) {
+			bug.save().success(function(){
+				res.redirect(bug.href());
+			});
+		} else {
 			res.redirect(bug.href());
-		});
+		}
 	})
 	.error(function(){
 		res.send('');
