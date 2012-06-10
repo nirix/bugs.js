@@ -733,3 +733,4 @@ button.close{padding:0;cursor:pointer;background:transparent;border:0;-webkit-ap
 .bug.content .description{margin-bottom:10px;}
 .new.bug.content #description{width:500px;height:200px;}
 form.form-horizontal .control-group.last{margin-bottom:0;}
+.alert.alert-error ul{margin-bottom:0;}

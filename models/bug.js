@@ -19,10 +19,7 @@ module.exports = function(sequelize, dtype) {
     },
     status: {
       type: dtype.STRING,
-      validate: {
-        isIn: ['New', 'Accepted', 'Fixed', 'Wont fix', 'Invalid'],
-        notEmpty: true
-      }
+      validate: { notEmpty: true }
     },
     closed: {
       type: dtype.BOOLEAN,

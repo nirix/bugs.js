@@ -17,7 +17,9 @@ exports.login = function(req, res) {
 
 // Login handler
 exports.do_login = function(req, res) {
-  var no_joy = function() { res.render('users/login', { title: 'Login', error: true, redir: req.body.redir || '/' }) }
+  var no_joy = function() {
+    res.render('users/login', { title: 'Login', error: true, redir: req.body.redir || '/' })
+  }
   // Find the user
   models.User.find({ where: { username: req.body.username } })
   .success(function(user){
@@ -63,8 +65,8 @@ exports.create = function(req, res) {
     login_hash: new hashes.SHA1().hex("<('.'<)" + Date.now() + "<('.')>" + Math.random() + "(>'.')>")
   });
   
-  // Due to Sequelize being a piece of shit and not including a
-  // is-unique validation, we need to pissfart around and do shit like this:
+  // Due to Sequelize not including a proper isUnique vaidation, we have to check
+  // the username is unique the old way.
   models.User.find({ where: { username: req.body.username }}).success(function(u){
     // Check for errors
     var errors = user.validate();
@@ -85,5 +87,4 @@ exports.create = function(req, res) {
       user.save().success(function(){ res.redirect('/') });
     }
   });
-  // Should switch to persistance.js, eh?
 };

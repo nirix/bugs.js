@@ -10,19 +10,19 @@
 	</div>
 	<% } %>
 	<form action="/register" method="post" class="well form-horizontal">
-		<div class="control-group">
+		<div class="control-group<% if (error && error.username) { %> error<% } %>">
 			<label class="control-label" for="username">Username</label>
 			<div class="controls">
 				<input type="text" name="username" id="username" required>
 			</div>
 		</div>
-		<div class="control-group">
+		<div class="control-group<% if (error && error.password) { %> error<% } %>">
 			<label class="control-label" for="password">Password</label>
 			<div class="controls">
 				<input type="password" name="password" id="password" required>
 			</div>
 		</div>
-		<div class="control-group">
+		<div class="control-group<% if (error && error.email) { %> error<% } %>">
 			<label class="control-label" for="email">Email</label>
 			<div class="controls">
 				<input type="email" name="email" id="email" required>
