@@ -31,6 +31,7 @@ module.exports = function(sequelize, dtype) {
   },
   {
     timestamps: true,
+    collate: 'utf8_general_ci',
     instanceMethods: {
       /**
        * Easily get the URL to the bug report.

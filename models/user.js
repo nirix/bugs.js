@@ -11,6 +11,7 @@ module.exports = function(sequelize, dtype) {
   return sequelize.define("user", {
     username: {
       type: dtype.STRING,
+      unique: true,
       validate: {
         notEmpty: { args: true, msg: "Please enter a username" },
       }
@@ -31,5 +32,8 @@ module.exports = function(sequelize, dtype) {
       type: dtype.STRING,
       validate: { notEmpty: true }
     }
+  },
+  {
+    collate: 'utf8_general_ci'
   })
 }
