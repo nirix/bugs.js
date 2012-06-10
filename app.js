@@ -84,11 +84,15 @@ app.post('/bugs/new', [requiresLogin], routes.bugs.create);
 app.get('/bugs/:id', routes.bugs.view);
 app.post('/bugs/:id/update', [requiresLogin, adminOnly], routes.bugs.update_status);
 app.get('/bugs/:id/delete', [requiresLogin, adminOnly], routes.bugs.delete);
+
 app.get('/login', routes.users.login);
 app.post('/login', routes.users.do_login);
 app.get('/logout', routes.users.logout);
 app.get('/register', routes.users.register);
 app.post('/register', routes.users.create);
+
+app.get('/.admin', [requiresLogin, adminOnly], routes.admin.index);
+app.get('/.admin/user/:id/isadmin=:isadmin', [requiresLogin, adminOnly], routes.admin.set_admin_status);
 
 app.listen(process.env.PORT || 3000, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);

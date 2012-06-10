@@ -9,3 +9,4 @@
 
 exports.bugs = require('./bugs');
 exports.users = require('./users');
+exports.admin = require('./admin');

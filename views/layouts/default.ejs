@@ -12,6 +12,9 @@
 			<nav id="navbar" class="navbar navbar-inner">
 				<ul id="usernav">
 				<% if (session.user) { %>
+					<% if (session.user.isAdmin) { %>
+					<li><a href="/.admin">Admin</a></li>
+					<% } %>
 					<li><a href="/logout">Logout</a></li>
 				<% } else { %>
 					<li><a href="/login">Login</a></li>

@@ -1,0 +1,24 @@
+<div class="content">
+	<h2>Admin</h2>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Username</th>
+				<th width="200">Role</th>
+			</tr>
+		</thead>
+		<tbody>
+		<% users.forEach(function(u) { %>
+			<tr>
+				<td><%= u.username %></td>
+				<td>
+					<div class="btn-group">
+						<a href="/.admin/user/<%= u.id %>/isadmin=false" class="btn<% if (u.isAdmin == false) { %> btn-success<% } %>">User</a>
+						<a href="/.admin/user/<%= u.id %>/isadmin=true" class="btn<% if (u.isAdmin == true) { %> btn-success<% } %>">Admin</a>
+					</div>
+				</td>
+			</tr>
+		<% }) %>
+		</tbody>
+	</table>
+</div>
