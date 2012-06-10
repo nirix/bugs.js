@@ -12,19 +12,19 @@ var bcrypt = require('bcrypt')
 
 // Login form
 exports.login = function(req, res) {
-  res.render('users/login', { title: 'Login', error: false });
+  res.render('users/login', { title: 'Login', error: false, redir: req.query.redir || '/' });
 };
 
 // Login handler
 exports.do_login = function(req, res) {
-  var no_joy = function() { res.render('users/login', { title: 'Login', error: true }) }
+  var no_joy = function() { res.render('users/login', { title: 'Login', error: true, redir: req.body.redir || '/' }) }
   // Find the user
   models.User.find({ where: { username: req.body.username } })
   .success(function(user){
     // Validate the users password
     if (user && user.id > 0 && bcrypt.compareSync(req.body.password, user.password)) {
       req.session.user = user;
-      res.redirect('/');
+      res.redirect(req.body.redir);
     }
     // Either the user doesnt exist or the password is wrong
     else {

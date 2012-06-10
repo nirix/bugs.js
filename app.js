@@ -56,7 +56,7 @@ function requiresLogin(req, res, next) {
   if (req.session.user) {
     next();
   } else {
-    res.redirect('/login?goto=' + req.url);
+    res.redirect('/login?redir=' + req.url);
   }
 }
 
