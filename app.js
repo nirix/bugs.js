@@ -11,6 +11,7 @@ var express = require('express')
   , routes = require('./routes')
   , db = require('./db.js')
   , config = require('./config.js')
+  , DateTime = require('./lib/datetime.js')
   , bugsjs = require('./package.json');
 
 global.db = db;
@@ -48,6 +49,14 @@ app.dynamicHelpers({
   },
   requestedUrl: function(req, res){
     return req.url;
+  }
+});
+
+app.helpers({
+  formatDateTime: function(from){
+    var d = new Date(Date.parse(from));
+    return DateTime.hour(d.getHours()) + ":" + DateTime.minute(d.getMinutes()) + DateTime.ampm(d.getHours())
+            + " " + DateTime.month(d.getMonth()) + " " + d.getUTCDate() + DateTime.st(d.getUTCDate()) + " " + d.getFullYear();
   }
 });
 

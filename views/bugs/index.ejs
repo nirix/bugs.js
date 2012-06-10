@@ -6,6 +6,7 @@
 			<th>Summary</th>
 			<th>Status</th>
 			<th>Reported by</th>
+			<th>Reported on</th>
 		</thead>
 		<tbody>
 		<% bugs.forEach(function(bug){ %>
@@ -14,6 +15,7 @@
 				<td><a href="<%= bug.href() %>"><%= bug.summary %></a></td>
 				<td><%= bug.status %></td>
 				<td><%= bug.user.username %></td>
+				<td><%= formatDateTime(bug.createdAt) %></td>
 			</tr>
 		<% }); %>
 		</tbody>

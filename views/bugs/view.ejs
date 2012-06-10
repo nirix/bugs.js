@@ -18,8 +18,8 @@
 			<tr>
 				<td><%= bug.status %></td>
 				<td><%= bug.user.username %></td>
-				<td><%= bug.createdAt %></td>
-				<td><%= bug.updatedAt %></td>
+				<td><%= formatDateTime(bug.createdAt) %></td>
+				<td><%= formatDateTime(bug.updatedAt) %></td>
 			</tr>
 		</tbody>
 	</table>
