@@ -1,5 +1,10 @@
 <div class="bug content">
-	<h2><%= bug.summary %> <small>(#<%= bug.id %>)</small></h2>
+	<h2>
+		<%= bug.summary %> <small>(#<%= bug.id %>)</small>
+		<% if (session.user && session.user.isAdmin) { %>
+		<a href="<%= bug.href() %>/delete" class="btn btn-danger">Delete</a>
+		<% } %>
+	</h2>
 	<table class="table table-striped table-condensed table-bordered">
 		<thead>
 			<tr>
