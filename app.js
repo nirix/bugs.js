@@ -80,6 +80,6 @@ app.get('/logout', routes.users.logout);
 app.get('/register', routes.users.register);
 app.post('/register', routes.users.create);
 
-app.listen(3000, function(){
+app.listen(process.env.PORT || 3000, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 });
